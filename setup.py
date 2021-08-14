@@ -17,6 +17,7 @@ setup(
             'fastanalizer = fastanalizer:main'
         ]
     },
+    include_package_data=True,
     install_requires=[
             'plotly<5',
             'biopython>=1.77',
