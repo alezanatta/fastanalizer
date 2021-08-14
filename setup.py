@@ -1,15 +1,16 @@
+import os
 from setuptools import setup
 
 setup(
     name = 'fastanalizer',
-    packages = ['fastanalizer'],
-    version = '0.1',
+    packages = ['fastanalizer', 'fastanalizer.pyfasta'],
+    version = '0.1.1',
     license='MIT',
     description = 'Tool for fast protein domain analysis',
     author = 'Alexandre Zanatta Vieira',
     author_email = 'al-zanatta@hotmail.com',
     url = 'https://github.com/alezanatta/fastanalizer',
-    download_url = 'https://github.com/alezanatta/fastanalizer/archive/refs/tags/v0.1.tar.gz',    # I explain this later on
+    download_url = 'https://github.com/alezanatta/fastanalizer/archive/refs/tags/v0.1.1.tar.gz',    # I explain this later on
     keywords = ['BIOINFORMATICS', 'PROTEIN', 'PHYLOGENY'],
     entry_points={
         'console_scripts': [
