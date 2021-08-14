@@ -1,1 +1,1 @@
-# fastanalizer
+# FastAnalizer
