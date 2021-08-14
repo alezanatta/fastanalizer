@@ -9,7 +9,7 @@ setup(
     author = 'Alexandre Zanatta Vieira',
     author_email = 'al-zanatta@hotmail.com',
     url = 'https://github.com/alezanatta/fastanalizer',
-    download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+    download_url = 'https://github.com/alezanatta/fastanalizer/archive/refs/tags/v0.1.tar.gz',    # I explain this later on
     keywords = ['BIOINFORMATICS', 'PROTEIN', 'PHYLOGENY'],
     entry_points={
         'console_scripts': [
