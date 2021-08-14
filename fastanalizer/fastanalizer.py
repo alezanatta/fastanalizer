@@ -4,7 +4,7 @@ import sqlite3
 import os
 import concurrent.futures
 from operator import attrgetter
-from datetime import date
+from datetime import date, datetime
 
 from Bio import SeqIO
 from Bio.Alphabet import IUPAC, ProteinAlphabet
@@ -13,6 +13,7 @@ from geral import geral
 from domainsearch import domainsearch
 from pdomain import domaintrim
 from align import align
+from tree import nj_tree
 
 
 class SortingHelpFormatter(argparse.RawDescriptionHelpFormatter):
@@ -32,9 +33,6 @@ def __checkProteina(temp):
     return 0
 
 def main():
-
-    CONN = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
-    CURSOR = CONN.cursor()
 
     desc = f"""{'-'*40}
     FastAnalizer v0.1 Alpha (2021/Ago)
@@ -69,8 +67,8 @@ def main():
         arquivo.seek(0)
         dsc_sequencia = arquivo.read()
         cd_requisicao = str(uuid.uuid4())
-        dt_requisicao = date.today().isoformat()
-        nm_titulo = args.title or cd_requisicao
+        dt_requisicao = datetime.now().isoformat()
+        nm_titulo = args.title or "Analysis"
         tp_database = args.database
 
         sql = f"""INSERT INTO pipeline_requisicao (
@@ -91,8 +89,6 @@ def main():
 
         CURSOR.execute(sql)
         CONN.commit()
-        CONN.close()
-
         if not CURSOR.lastrowid:
             raise Exception("Start project failed.")
 
@@ -118,6 +114,8 @@ def main():
     for future in concurrent.futures.as_completed(futures, timeout=200):
         result = future.result()
         if result:
+            CONN.commit()
+            CONN.close()
             raise Exception()
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -127,10 +125,29 @@ def main():
     for future in concurrent.futures.as_completed(futures, timeout=200):
         result = future.result()
         if result:
+            CONN.commit()
+            CONN.close()
             raise Exception()
+
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = [
+            executor.submit(nj_tree, BASE_DIR=BASE_DIR, nm_titulo=nm_titulo)
+        ]
+    for future in concurrent.futures.as_completed(futures, timeout=200):
+        result = future.result()
+        if result:
+            CONN.commit()
+            CONN.close()
+            raise Exception()
+
+    CURSOR.execute(f"""UPDATE pipeline_requisicao SET dt_conclusao = "{datetime.now().isoformat()}" WHERE cd_requisicao = "{cd_requisicao}" """)
+    CONN.commit()
+    CONN.close()
 
 if __name__ == '__main__':
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    CONN = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
+    CURSOR = CONN.cursor()
     HIGH = ["HIGH"]
     LOW = [*HIGH,"LOW"]
     LOG = [*LOW, "LOG"]   

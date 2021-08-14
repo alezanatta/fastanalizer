@@ -90,4 +90,7 @@ def align(BASE_DIR):
 
         cursor.execute("""UPDATE pipeline_requisicao SET sn_align = True WHERE id = {}""".format(job[0]))
         conn.commit()
+    
+    cursor.close()
+    conn.close()
     return 0

@@ -62,7 +62,9 @@ def geral(BASE_DIR):
         del df
 
         cursor.execute(f"""UPDATE pipeline_requisicao SET sn_geral = True WHERE id = {job[0]}""")
-    conn.commit()
+        conn.commit()
+        
+    cursor.close()
     conn.close()
 
     return 0
