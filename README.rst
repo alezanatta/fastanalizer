@@ -18,6 +18,5 @@ or using ``setup.py`` if you have downloaded the source package locally::
 Example
 -------
 
-.. raw:: html
-
-    <iframe src="https://github.com/alezanatta/fastanalizer/blob/main/example/tree/tree.html" height="800px" width="100%"></iframe>
+.. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/tree/tree.svg
+  :width: 1000
