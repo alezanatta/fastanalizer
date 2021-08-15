@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from collections import Counter
 from collections import OrderedDict
 
-from pyfasta.pyfastatools import Fasta
+from fastanalizer.pyfasta.pyfastatools import Fasta
 
 
 def geral(BASE_DIR):

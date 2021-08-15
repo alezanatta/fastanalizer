@@ -9,11 +9,11 @@ from datetime import date, datetime
 from Bio import SeqIO
 from Bio.Alphabet import IUPAC, ProteinAlphabet
 
-from geral import geral
-from domainsearch import domainsearch
-from pdomain import domaintrim
-from align import align
-from tree import nj_tree
+from fastanalizer.geral import geral
+from fastanalizer.domainsearch import domainsearch
+from fastanalizer.pdomain import domaintrim
+from fastanalizer.align import align
+from fastanalizer.tree import nj_tree
 
 
 class SortingHelpFormatter(argparse.RawDescriptionHelpFormatter):
@@ -33,6 +33,13 @@ def __checkProteina(temp):
     return 0
 
 def main():
+
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    CONN = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
+    CURSOR = CONN.cursor()
+    HIGH = ["HIGH"]
+    LOW = [*HIGH,"LOW"]
+    LOG = [*LOW, "LOG"]
 
     desc = f"""{'-'*40}
     FastAnalizer v0.1 Alpha (2021/Ago)
@@ -145,11 +152,4 @@ def main():
     CONN.close()
 
 if __name__ == '__main__':
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    CONN = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
-    CURSOR = CONN.cursor()
-    HIGH = ["HIGH"]
-    LOW = [*HIGH,"LOW"]
-    LOG = [*LOW, "LOG"]   
-    
     main()

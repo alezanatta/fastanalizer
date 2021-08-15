@@ -8,7 +8,7 @@ from Bio.Alphabet import ProteinAlphabet
 
 import pandas as pd
 
-from pyfasta.pyfastatools import Align
+from fastanalizer.pyfasta.pyfastatools import Align
 
 def align(BASE_DIR):
     conn = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
