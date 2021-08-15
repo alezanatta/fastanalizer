@@ -35,7 +35,7 @@ Example
 
 Fastanalizer performs protein sequence analysis in 5 steps:
 
-1. **Análise de sequências do fasta:**
+1. **Fasta sequences analysis:**
 
     The first step analyzes basic metrics of the delivered multifast, such as quantity and size of sequences, shortest and longest sequences, standard deviation between sequences size and the amino acid distribution of the sequences. The results are saved in the ``general`` folder.
 
@@ -46,19 +46,25 @@ Fastanalizer performs protein sequence analysis in 5 steps:
 :width: 800
 :alt:
 
-2. **Análise de domínios funcionais:**
+2. **Functional domains analysis:**
 
     The second step is the search for functional domains in the delivered proteins. The analysis is done using the NCBI Batch Cd-Search. The results are saved in the ``domainsearch`` folder. Each file inside the folder has a maximum information of 2000 sequences. There is no limit to the total number of sequences and the execution time of this step varies according to the number of sequences provided.
 
-3. **Corte de sequências no domínio funcional**
+3. **Sequence trimming**
 
-    Under contruction
+    Under construction
 
-4. **Alinhamento de sequências**
+4. **Sequence alignment**
 
-    Under contruction
+    Under construction
 
-5. **Análise filogenética**
+5. **Phylogenetic analysis**
 
 .. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/tree/tree.svg
     :width: 1000
+
+
+Changelog
+---------
+
+    Under construction
