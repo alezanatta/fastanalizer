@@ -15,8 +15,50 @@ or using ``setup.py`` if you have downloaded the source package locally::
     $ sudo python setup.py install
 
 
+Usage
+-----
+
+After installation, to use `` fastanalizer`` just invoke it in the folder where the multifasta is located:
+
+    $ fastanalizer myfasta.fa
+
+You may also define a title to your job:
+
+    $ fastanalizer --title "Example" myfasta.fa
+
+It is possible to define the type of image output. Default is HTML.
+
+    $ fastanalizer --output SVG myfasta.fa
+
 Example
 -------
 
+Fastanalizer performs protein sequence analysis in 5 steps:
+
+1. **Análise de sequências do fasta:**
+
+    The first step analyzes basic metrics of the delivered multifast, such as quantity and size of sequences, shortest and longest sequences, standard deviation between sequences size and the amino acid distribution of the sequences. The results are saved in the ``general`` folder.
+
+.. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/general/metrics.svg
+:width: 800
+
+.. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/general/aa.svg
+:width: 800
+:alt:
+
+2. **Análise de domínios funcionais:**
+
+    The second step is the search for functional domains in the delivered proteins. The analysis is done using the NCBI Batch Cd-Search. The results are saved in the ``domainsearch`` folder. Each file inside the folder has a maximum information of 2000 sequences. There is no limit to the total number of sequences and the execution time of this step varies according to the number of sequences provided.
+
+3. **Corte de sequências no domínio funcional**
+
+    Under contruction
+
+4. **Alinhamento de sequências**
+
+    Under contruction
+
+5. **Análise filogenética**
+
 .. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/tree/tree.svg
-  :width: 1000
+    :width: 1000
