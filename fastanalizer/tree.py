@@ -7,6 +7,7 @@ import igraph
 
 from Bio import AlignIO
 from Bio.Phylo.TreeConstruction import DistanceCalculator, DistanceTreeConstructor
+from Bio.Phylo import NewickIO
 
 def convert_to_igraph(tree):
     #Convert a Biopython Tree object to an igraph Graph.
@@ -28,7 +29,7 @@ def convert_to_igraph(tree):
     build_subgraph(G, tree.root)
     return G 
 
-def nj_tree(BASE_DIR, tp_tree="NJ", nm_titulo=None):
+def nj_tree(BASE_DIR, tp_tree="NJ", nm_titulo=None, output="HTML"):
     conn = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
     cursor = conn.cursor()
 
@@ -58,7 +59,8 @@ def nj_tree(BASE_DIR, tp_tree="NJ", nm_titulo=None):
         tree = constructor.nj(dm)
 
         with open(os.path.join(job[2], "tree", f"{job[2]}.tree"), "w") as arquivo:
-            arquivo.write(str(tree))
+            #arquivo.write(str(tree))
+            NewickIO.write([tree], arquivo)
 
         G=convert_to_igraph(tree)
 
@@ -171,8 +173,12 @@ def nj_tree(BASE_DIR, tp_tree="NJ", nm_titulo=None):
             )
             config = dict({'scrollZoom': True, 'modeBarButtonsToAdd':['drawline','drawopenpath','drawcircle','drawrect','eraseshape']}) 
 
-            #fig.show(config=config)
-            fig.write_html(os.path.join(job[2], "tree", "tree.html"), config=config)
+            if output == "HTML":
+                fig.write_html(os.path.join(job[2], "tree", "tree.html"), config=config)
+            elif output in ["PNG", "SVG", "PDF"]:
+                fig.write_image(os.path.join(job[2], "tree", f"tree.{output.lower()}"), engine="kaleido")
+            else:
+                fig.write_html(os.path.join(job[2], "tree", "tree.html"), config=config)
 
         cursor.execute(f"""UPDATE pipeline_requisicao SET sn_phylo = True WHERE id = {job[0]}""")
         conn.commit()

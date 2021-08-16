@@ -40,11 +40,12 @@ Fastanalizer performs protein sequence analysis in 5 steps:
     The first step analyzes basic metrics of the delivered multifast, such as quantity and size of sequences, shortest and longest sequences, standard deviation between sequences size and the amino acid distribution of the sequences. The results are saved in the ``general`` folder.
 
 .. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/general/metrics.svg
-:width: 800
+    :width: 1000
+    :alt: Fasta metrics
 
 .. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/general/aa.svg
-:width: 800
-:alt:
+    :width: 1000
+    :alt: Amino acid distribution
 
 2. **Functional domains analysis:**
 
@@ -52,16 +53,23 @@ Fastanalizer performs protein sequence analysis in 5 steps:
 
 3. **Sequence trimming**
 
-    Under construction
+    The search results from step 2 are used to select the function domain by parsimony: the domain with the highest amount of specific hits is used to cut the given sequences. Sequences with incomplete domain are discarded.
+
+.. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/pdomain/pdomain.svg
+    :width: 1000
+    :alt: Protein domain specific hits
 
 4. **Sequence alignment**
 
-    Under construction
+    The trimmed sequences are align. Fastanalizer utilizes MAFFT with automatic settings to align. The results are saved in the ``align`` folder. The sequences used for the alignment are in ``job.fasta``. The supplied multifasta is the ``base.fasta`` and the align sequences is ``align.fasta``. Sequences are rename for better presentation at the phylogenetic analysis. The file ``rename.txt`` has the from-to table. MAFFT output can be found in ``align-stderr.fasta``
 
 5. **Phylogenetic analysis**
 
+    A Neighboor joining tree created using BioPython Phylo module.
+
 .. image:: https://github.com/alezanatta/fastanalizer/blob/main/example/svg/tree/tree.svg
     :width: 1000
+    :alt: Phylogenetic tree as graph
 
 
 Changelog

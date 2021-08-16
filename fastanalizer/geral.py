@@ -12,7 +12,7 @@ from collections import OrderedDict
 from fastanalizer.pyfasta.pyfastatools import Fasta
 
 
-def geral(BASE_DIR):
+def geral(BASE_DIR, output="HTML"):
     conn = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
     cursor = conn.cursor()
 
@@ -42,7 +42,15 @@ def geral(BASE_DIR):
         fig = px.bar(ddf, x="size", y="Metrics", title=f"{title or 'FASTA'} - Sequence Metrics", template="plotly_white", color="Metrics")
         fig.update_layout(font_family="Roboto")    
         fig.update_yaxes(type="category")
-        fig.write_html(os.path.join(job[2], "general", "metrics.html"))
+
+        if output == "HTML":
+            fig.write_html(os.path.join(job[2], "general", "metrics.html"))
+        elif output in ["PNG", "SVG", "PDF"]:
+            fig.write_image(os.path.join(job[2], "general", f"metrics.{output.lower()}"), engine="kaleido")
+        else:
+            fig.write_html(os.path.join(job[2], "general", "metrics.html"))
+
+
         del fig
         del ddf
 
@@ -56,7 +64,14 @@ def geral(BASE_DIR):
         df["Percentage"] = df.groupby(["Amino acids"]).apply(lambda x: 100 * x / df["Count"].sum())
         fig = px.scatter(df, x="Amino acids", y="Percentage", size="Count", title="Amino acids distribution", template="plotly_white", color="Amino acids")
         fig.update_layout(font_family="Roboto", showlegend=False)
-        fig.write_html(os.path.join(job[2], "general", "aa.html"))
+        
+        if output == "HTML":
+            fig.write_html(os.path.join(job[2], "general", "aa.html"))
+        elif output in ["PNG", "SVG", "PDF"]:
+            fig.write_image(os.path.join(job[2], "general", f"aa.{output.lower()}"), engine="kaleido")
+        else:
+            fig.write_html(os.path.join(job[2], "general", "aa.html"))
+        
         del fig
         del bb
         del df

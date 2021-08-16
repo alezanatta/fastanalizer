@@ -41,7 +41,7 @@ def main():
     LOW = [*HIGH,"LOW"]
     LOG = [*LOW, "LOG"]
 
-    desc = f"""{'-'*40}
+    desc = f"""    {'-'*40}
     FastAnalizer v0.1 Alpha (2021/Ago)
     Fast usage: fastanalizer myfile.fasta
     {'-'*40}"""
@@ -57,6 +57,7 @@ def main():
     parser.add_argument('--checkpoint', help="Restart project on given checkpoint. Must inform project ID", choices=sorted(["ALIGN","DOMAINSEARCH", "GERAL", "PHYLO","DOMAINTRIM"]))
     parser.add_argument('--id', help="Project ID. Required for checkpoint usage.")
     parser.add_argument('--verbose', help="Application verbose level. Default to high verbose.", choices=["LOG", "LOW", "HIGH"], default="HIGH")
+    parser.add_argument('--output', help="Set graphs output format", choices=["HTML", "PNG", "SVG", "PDF"], default="HTML")
 
     args = parser.parse_args()
 
@@ -106,7 +107,7 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(geral, BASE_DIR=BASE_DIR),
+            executor.submit(geral, BASE_DIR=BASE_DIR, output=args.output),
             executor.submit(domainsearch, BASE_DIR=BASE_DIR)
         ]
     for future in concurrent.futures.as_completed(futures, timeout=200):
@@ -116,7 +117,7 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(domaintrim, BASE_DIR=BASE_DIR, database=tp_database)
+            executor.submit(domaintrim, BASE_DIR=BASE_DIR, database=tp_database, output=args.output)
         ]
     for future in concurrent.futures.as_completed(futures, timeout=200):
         result = future.result()
@@ -138,7 +139,7 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(nj_tree, BASE_DIR=BASE_DIR, nm_titulo=nm_titulo)
+            executor.submit(nj_tree, BASE_DIR=BASE_DIR, nm_titulo=nm_titulo, output=args.output)
         ]
     for future in concurrent.futures.as_completed(futures, timeout=200):
         result = future.result()

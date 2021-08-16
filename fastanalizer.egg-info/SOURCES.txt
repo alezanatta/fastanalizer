@@ -1,5 +1,5 @@
 MANIFEST.in
-README.md
+README.rst
 setup.cfg
 setup.py
 fastanalizer/__init__.py

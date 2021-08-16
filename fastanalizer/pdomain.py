@@ -9,7 +9,7 @@ import numpy as np
 
 from sklearn.preprocessing import MinMaxScaler
 
-def domaintrim(BASE_DIR, database="ALL"):
+def domaintrim(BASE_DIR, database="ALL", output="HTML"):
     conn = sqlite3.connect(os.path.join(BASE_DIR, "fastanalizer.sqlite3"))
     cursor = conn.cursor()
 
@@ -66,7 +66,14 @@ def domaintrim(BASE_DIR, database="ALL"):
             fig.update_xaxes(type="category", categoryarray=result[["Accession"]].values.reshape(1,-1).tolist()[0], categoryorder="array")
             
             #fig.show()
-            fig.write_html(os.path.join(job[2], "pdomain", "pdomain.html"))
+            
+            if output == "HTML":
+                fig.write_html(os.path.join(job[2], "pdomain", "pdomain.html"))
+            elif output in ["PNG", "SVG", "PDF"]:
+                fig.write_image(os.path.join(job[2], "pdomain", f"pdomain.{output.lower()}"), engine="kaleido")
+            else:
+                fig.write_html(os.path.join(job[2], "pdomain", "pdomain.html"))
+
             cursor.execute("""UPDATE pipeline_requisicao SET sn_pdomain = True WHERE id = {}""".format(job[0]))
             conn.commit()
 
