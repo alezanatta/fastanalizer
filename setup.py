@@ -1,6 +1,6 @@
 from setuptools import setup
 
-FASTANALIZER_VERSION = "0.1.2"
+FASTANALIZER_VERSION = "0.1.3"
 
 setup(
     name = 'fastanalizer',
@@ -12,7 +12,7 @@ setup(
     author = 'Alexandre Zanatta Vieira',
     author_email = 'al-zanatta@hotmail.com',
     url = 'https://github.com/alezanatta/fastanalizer',
-    download_url = 'https://github.com/alezanatta/fastanalizer/archive/refs/tags/v0.1.2.tar.gz',    # I explain this later on
+    download_url = 'https://github.com/alezanatta/fastanalizer/archive/refs/tags/v0.1.3.tar.gz',    # I explain this later on
     keywords = ['BIOINFORMATICS', 'PROTEIN', 'PHYLOGENY'],
     entry_points={
         'console_scripts': [
@@ -22,7 +22,7 @@ setup(
     include_package_data=True,
     install_requires=[
             'plotly>=4.9,<5',
-            'biopython>=1.77',
+            'biopython>=1.78',
             'numpy>=1',
             'pandas>=1',
             'scikit-learn',

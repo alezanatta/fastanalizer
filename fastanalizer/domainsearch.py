@@ -8,7 +8,6 @@ from datetime import datetime
 
 from tempfile import NamedTemporaryFile
 from Bio import SeqIO
-from Bio.Alphabet import ProteinAlphabet
 
 #From biopython.org large file spliter, modified to work
 def batch_iterator(iterator, batch_size):
@@ -115,7 +114,7 @@ def domainsearch(BASE_DIR):
         temp.write(job[1])
         temp.seek(0)
 
-        fasta = SeqIO.parse(temp, "fasta", alphabet=ProteinAlphabet())
+        fasta = SeqIO.parse(temp, "fasta")
 
         for i, fa in enumerate(batch_iterator(fasta, 2000)):
             tempFasta = NamedTemporaryFile(mode="w+t")

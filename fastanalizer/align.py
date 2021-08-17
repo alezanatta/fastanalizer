@@ -4,7 +4,6 @@ import re
 
 from tempfile import NamedTemporaryFile
 from Bio import SeqIO
-from Bio.Alphabet import ProteinAlphabet
 
 import pandas as pd
 
@@ -41,11 +40,11 @@ def align(BASE_DIR):
         temp.write(job[1])
         temp.seek(0)
 
-        fasta = SeqIO.parse(temp, "fasta", alphabet=ProteinAlphabet())
+        fasta = SeqIO.parse(temp, "fasta")
         SeqIO.write(fasta, os.path.join(job[2], "align", "base.fasta"), "fasta")
         
         temp.seek(0)
-        fasta = SeqIO.parse(temp, "fasta", alphabet=ProteinAlphabet())
+        fasta = SeqIO.parse(temp, "fasta")
         del temp
         
         seqs = {}

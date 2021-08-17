@@ -4,10 +4,9 @@ import sqlite3
 import os
 import concurrent.futures
 from operator import attrgetter
-from datetime import date, datetime
+from datetime import datetime
 
 from Bio import SeqIO
-from Bio.Alphabet import IUPAC, ProteinAlphabet
 
 from fastanalizer.geral import geral
 from fastanalizer.domainsearch import domainsearch
@@ -20,17 +19,6 @@ class SortingHelpFormatter(argparse.RawDescriptionHelpFormatter):
     def add_arguments(self, actions):
         actions = sorted(actions, key=attrgetter('option_strings'))
         super(SortingHelpFormatter, self).add_arguments(actions)
-
-def __checkProteina(temp):
-    """Verificar se as sequências em um FASTA são proteínas
-    Recebe um objeto SeqIO.parse.
-    Retorna 1 caso uma sequência não seja proteína."""
-    texto = SeqIO.parse(temp, "fasta", alphabet=IUPAC.IUPACProtein())
-    for t in texto:
-        if not isinstance(t.seq.alphabet, ProteinAlphabet):
-            print(t.seq)
-            return 1
-    return 0
 
 def main():
 
@@ -62,15 +50,10 @@ def main():
     args = parser.parse_args()
 
     with open(args.file[0], "r") as arquivo:
-        texto = SeqIO.parse(arquivo, "fasta", alphabet=ProteinAlphabet())
+        texto = SeqIO.parse(arquivo, "fasta")
         if not any(texto):
             raise Exception("Empty file provided.")
-
         del texto
-        arquivo.seek(0)   
-
-        if __checkProteina(arquivo):
-            raise Exception("Not a protein fasta.")
 
         arquivo.seek(0)
         dsc_sequencia = arquivo.read()

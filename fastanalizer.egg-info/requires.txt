@@ -1,4 +1,4 @@
-biopython>=1.77
+biopython>=1.78
 kaleido
 numpy>=1
 pandas>=1
